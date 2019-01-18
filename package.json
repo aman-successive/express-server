@@ -6,6 +6,8 @@
   "scripts": {
     "Validation": "node extra/utils/validation.js",
     "Permissions": "node extra/utils/permissions.js",
+    "patternDiamond": "node extra/pattern/diamond.js",
+    "patternTriangle": "node extra/pattern/triangle.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
