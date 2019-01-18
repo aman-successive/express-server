@@ -15,23 +15,17 @@ function validateEmail(email){
     return(regex.test(email));
 
 }
-function validateUsers(){
-    users.forEach( function(user) {
+function validateUsers(user1){
+    user1.forEach( function(user) {
         const { traineeEmail , reviewerEmail } = user;
-        if ( validateEmail(traineeEmail)){
+        if ( validateEmail(traineeEmail) && validateEmail(reviewerEmail) ){
           valid++;
         }
         else {
             invalid++;
         }
-        if( validateEmail(reviewerEmail)){
-          valid++;
-        }
-        else{
-          invalid++;
-        }
     });
     console.log(`There are ${valid} valid emails`);
     console.log(`There are ${invalid} invalid emails`);
 }
-validateUsers();
+validateUsers(users);
