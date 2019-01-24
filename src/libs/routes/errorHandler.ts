@@ -1,9 +1,16 @@
-export default function errorHandler(err, req, res, next) {
+import { Request, Response } from "express";
+export default function errorHandler(
+  err: any,
+  req: Request,
+  res: Response,
+  next
+) {
   console.log("Inside errorHandler");
-  res.send({
-    error: "Not Found",
-    message: "error",
-    status: 500,
+  const { error, message, status } = err;
+  res.status(status).json({
+    error: error || "Not Found",
+    message: message || "error",
+    status: status || 500,
     timestamp: new Date()
   });
 }
