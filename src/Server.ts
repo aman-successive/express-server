@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import {errorHandler,notFoundRoutes} from "./libs/routes/index";
+import {errorHandler,notFoundRoutes} from "./libs/routes";
 class Server {
   private app: express.Express;
   bodyParser = require("body-parser");
