@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "babel-node extra --presets env",
-    "nodemon": "nodemon ./dist/index.js",
-    "extraTs": "tsc-watch --project . --onSuccess \"npm run nodemon\""
+    "prestart": "npm run clean",
+    "start": "tsc-watch --project . --onSuccess \"npm run nodemon\"",
+    "clean": "rm -r -f dist",
+    "nodemon": "nodemon ./dist/index.js"
   },
   "repository": {
     "type": "git",

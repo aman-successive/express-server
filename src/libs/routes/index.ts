@@ -1,4 +1,5 @@
 import errorHandler from "./errorHandler";
 import notFoundRoutes from "./notFoundRoutes";
 import { successHandler } from "./successHandler";
-export { errorHandler, notFoundRoutes, successHandler };
+import validateHandler from "./validateHandler";
+export { errorHandler, notFoundRoutes, successHandler, validateHandler };
