@@ -6,19 +6,20 @@ const validateConfig = {
       in: ["body"],
       custom: function(value) {
         console.log("Value", value);
-        throw { error: "Error Occurred", message: "Message" };
+        //throw { error: "Error Occurred", message: "Message",status:202 };
       }
     },
     name: {
       required: true,
-      regex: "",
+      regex: /^[A-Za-z0-9._%+-]+@successive.tech$/,
       in: ["body"],
       errorMessage: "Name is required"
     }
   },
   delete: {
     id: {
-      required: true,
+      required: false,
+      string: true,
       errorMessage: "Id is required",
       in: ["params"]
     }
@@ -42,7 +43,7 @@ const validateConfig = {
   update: {
     id: {
       required: true,
-      string: true,
+      string: false,
       in: ["body"]
     },
     dataToUpdate: {

@@ -6,4 +6,4 @@ export const traineeRouter: Router = Router();
 traineeRouter.get("/", validateHandler(validateConfig.get), Controller.get);
 traineeRouter.post("/", validateHandler(validateConfig.create), Controller.create);
 traineeRouter.put("/", validateHandler(validateConfig.update), Controller.update);
-traineeRouter.delete("/", validateHandler(validateConfig.delete), Controller.delete);
+traineeRouter.delete("/:id", validateHandler(validateConfig.delete), Controller.delete);
