@@ -6,11 +6,14 @@ const validateConfig = {
       in: ["body"],
       custom: function(value) {
         console.log("Value", value);
+        if(Array.isArray(value)){
+          console.log("it is an array");
+        }
         //throw { error: "Error Occurred", message: "Message",status:202 };
       }
     },
     name: {
-      required: true,
+      required: false,
       regex: /^[A-Za-z0-9._%+-]+@successive.tech$/,
       in: ["body"],
       errorMessage: "Name is required"
