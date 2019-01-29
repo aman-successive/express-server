@@ -1,15 +1,13 @@
 import { successHandler } from "../../libs/routes";
 import { Response, Request } from "express";
-
+import * as jwt from "jsonwebtoken";
 class Controller {
   get(req: Request, res: Response) {
     console.log("Inside get");
-    res.send({
-      Name: "Trainee1",
-      message: "get details",
-      status: 200,
-      timestamp: new Date()
-    });
+    const token = req.headers["authorization"];
+    console.log(token);
+    const decode = jwt.verify(token, process.env.KEY);
+    res.status(202).send(successHandler("AUTHORIZED", 202, decode));
   }
   create(req: Request, res: Response, next) {
     const { name, id } = req.body;
