@@ -4,7 +4,7 @@ import { validateHandler } from "../../libs/routes";
 import validateConfig from "./validate";
 import { authMiddleWare } from "../../libs/routes";
 export const traineeRouter: Router = Router();
-traineeRouter.get("/", authMiddleWare('trainee1','read'), Controller.get);
+traineeRouter.get("/", authMiddleWare('trainee1','read'),validateHandler(validateConfig.get), Controller.get);
 traineeRouter.post("/", validateHandler(validateConfig.create), Controller.create);
 traineeRouter.put("/", validateHandler(validateConfig.update), Controller.update);
 traineeRouter.delete("/:id", validateHandler(validateConfig.delete), Controller.delete);
