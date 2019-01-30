@@ -10,9 +10,9 @@ export default function validateHandler(ObjData) {
       });
       console.log("The value is", value);
       console.log(value);
-      const validatedValue = value.filter(item => item);
+      const validatedValue = value.filter(item => item)[0];
       if (item && item.required) {
-        if (validatedValue.length !== value.length) {
+        if (validatedValue == null) {
           next({
             error: "Not Valid",
             message: `${key} is required`,
@@ -20,28 +20,28 @@ export default function validateHandler(ObjData) {
           });
         }
       }
-      if (!Array.isArray(validatedValue[0])) {
+      if (!Array.isArray(validatedValue)) {
         if (item.string) {
-          validateHelper(validatedValue[0], "string", next);
+          validateHelper(validatedValue, "string", next);
         }
       }
       if (item.number) {
-        validateHelper(validatedValue[0], "number", next);
+        validateHelper(validatedValue, "number", next);
       }
       if (item.regex) {
-        if (item.regex.test(validatedValue[0])) {
+        if (item.regex.test(validatedValue)) {
           next({
             error: "Not Valid",
-            message: `${validatedValue[0]} is not valid`,
+            message: `${validatedValue} is not valid`,
             status: 404
           });
         }
       }
       if (item.isObject) {
-        validateHelper(validatedValue[0], "object", next);
+        validateHelper(validatedValue, "object", next);
       }
       if (item.custom) {
-        item.custom(validatedValue[0]);
+        item.custom(validatedValue);
       }
     });
     next();

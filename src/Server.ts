@@ -2,6 +2,7 @@ import { router } from "./router";
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import { errorHandler, notFoundRoutes } from "./libs/routes";
+import Database from "./libs/Database";
 class Server {
   private app: express.Express;
   public constructor(private config) {
@@ -33,14 +34,20 @@ class Server {
     console.log("inside run");
     const {
       app,
-      config: { port }
+      config: { port, mongoUrl }
     } = this;
-    app.listen(port, err => {
-      if (err) {
-        throw err;
-      }
-      console.log(`app is running on port ${port}`);
-    });
+    Database.open(mongoUrl)
+      .then(result => {
+        app.listen(port, err => {
+          if (err) {
+            throw err;
+          }
+          console.log(`app is running on port ${port}`);
+        });
+      })
+      .catch(err => {
+        console.log("NOT RUNNING");
+      });
   }
 }
 export default Server;
