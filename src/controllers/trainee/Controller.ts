@@ -11,7 +11,7 @@ class Controller {
       timestamp: new Date()
     });
   }
-  post(req: Request, res: Response, next) {
+  create(req: Request, res: Response, next) {
     const { name, id } = req.body;
     const data = [
       {
@@ -19,28 +19,28 @@ class Controller {
         id: id
       }
     ];
-    if (!name) {
-      return next({ error: "Name not found", message: "Error", status: 404 });
-    }
-    if (!id) {
-      return next({ error: "id not found", message: "Error", status: 404 });
-    }
-    if (!id && !name) {
-      return next({ error: "No data found", message: "Error", status: 404 });
-    }
+    // if (!name) {
+    //   return next({ error: "Name not found", message: "Error", status: 404 });
+    // }
+    // if (!id) {
+    //   return next({ error: "id not found", message: "Error", status: 404 });
+    // }
     res.status(202).send(successHandler("Success", 202, data));
   }
-  put(req: Request, res: Response, next) {
+  update(req: Request, res: Response, next) {
+    const { dataToUpdate, id } = req.body;
     const data = [
       {
-        Name: "Trainee1",
-        id: 456
+        dataToUpdate: dataToUpdate,
+        id: id
       }
     ];
     res.status(202).send(successHandler("Success", 202, data));
   }
   delete(req: Request, res: Response, next) {
-    res.status(202).send(successHandler("Data deleted", 202, null));
+    const { id } = req.param;
+    console.log("inside delete");
+    res.status(202).send(successHandler("Data deleted", 202, id));
   }
 }
 export default new Controller();
