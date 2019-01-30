@@ -1,3 +1,4 @@
+import validateHelper from "./validateHelper";
 export default function validateHandler(ObjData) {
   return function(req, res, next) {
     const keys = Object.keys(ObjData);
@@ -19,23 +20,13 @@ export default function validateHandler(ObjData) {
           });
         }
       }
-      if (item.string) {
-          if (typeof validatedValue[0] !== "string") {
-            next({
-              error: "Not Valid",
-              message: `${validatedValue[0]} is not string`,
-              status: 404
-            });
-          }
+      if (!Array.isArray(validatedValue[0])) {
+        if (item.string) {
+          validateHelper(validatedValue[0], "string", next);
         }
+      }
       if (item.number) {
-        if (typeof validatedValue[0] !== "number") {
-          next({
-            error: "Not Valid",
-            message: `${validatedValue[0]} is not number`,
-            status: 404
-          });
-        }
+        validateHelper(validatedValue[0], "number", next);
       }
       if (item.regex) {
         if (item.regex.test(validatedValue[0])) {
@@ -47,13 +38,7 @@ export default function validateHandler(ObjData) {
         }
       }
       if (item.isObject) {
-        if (typeof validatedValue[0] !== "object") {
-          next({
-            error: "Not Valid",
-            message: `${validatedValue[0]} is not object`,
-            status: 404
-          });
-        }
+        validateHelper(validatedValue[0], "object", next);
       }
       if (item.custom) {
         item.custom(validatedValue[0]);

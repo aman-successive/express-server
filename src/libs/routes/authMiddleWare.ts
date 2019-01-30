@@ -4,12 +4,16 @@ export default function(module, permissiontype) {
   return function(req, res, next) {
     const token = req.headers["authorization"];
     console.log(token);
-    const decode = jwt.verify(token, process.env.KEY, (err, res) => {
-      if (err) {
-        return false;
-      }
-      return res;
-    });
+    let decode;
+    try {
+      decode = jwt.verify(token, process.env.KEY);
+    } catch (error) {
+      return next({
+        error: "Not Valid",
+        message: "Unauthorised Access",
+        status: 401
+      });
+    }
     console.log(decode);
     if (!decode) {
       next({
