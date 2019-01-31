@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import seedData from "./seedData";
 class Database {
   open(mongoUrl) {
     return new Promise((resolve, reject) => {
@@ -7,14 +8,15 @@ class Database {
           mongoUrl,
           { useNewUrlParser: true }
         )
-        .then(result => {
-          resolve(result);
+        .then(() => {
+          resolve();
           console.log("connected");
         })
         .catch(err => {
           reject(err);
           console.log("not connected");
         });
+        seedData();
     });
   }
   disconnect() {
