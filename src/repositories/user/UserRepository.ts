@@ -5,18 +5,18 @@ import IUserModel from "./IUserModel";
 export class UserRepo {
   private model: mongoose.Model<IUserModel>;
   public static generateObjectId() {
-    return String(mongoose.Types.ObjectId);
+    return String(mongoose.Types.ObjectId());
   }
   constructor() {
     this.model = UserModel;
   }
   public createUser(data): Promise<IUserModel> {
-    return this.model.create(data);
+    return this.model.create({...data, _id:UserRepo.generateObjectId()});
   }
   public deleteUser(data) {
     return this.model.deleteMany(data, function(err) {});
   }
   public updateUser(data) {
-    return this.model.update({ name: "BANNER" }, data, function(err) {});
+    return this.model.updateMany({ name: "BANNER" }, data, function(err) {});
   }
 }
