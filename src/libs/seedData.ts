@@ -3,9 +3,10 @@ export default function seedData() {
   console.log("In seedData");
   const userRepo = new UserRepo();
   userRepo.createUser({
-    name: "User"
+    name: "HULK",
+    id:UserRepo.generateObjectId()
   });
   userRepo.deleteUser({
-    name:"Aman"
-  })
+    name: "User"
+  });
 }
