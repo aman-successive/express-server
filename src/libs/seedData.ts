@@ -9,7 +9,7 @@ export default function seedData() {
   userRepo.deleteUser({
     name: "HULK"
   });
-  // userRepo.updateUser({
-  //   name: "STARK"
-  // });
+  userRepo.updateUser({
+    name: "STARK"
+  });
 }

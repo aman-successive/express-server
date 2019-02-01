@@ -13,10 +13,10 @@ export class UserRepo {
   public createUser(data): Promise<IUserModel> {
     return this.model.create(data);
   }
-  public deleteUser(data){
+  public deleteUser(data) {
     return this.model.deleteMany(data, function(err) {});
   }
-  // public updateUser(data) {
-  //   return this.model.update({ name: "BANNER" }, data);
-  // }
+  public updateUser(data) {
+    return this.model.update({ name: "BANNER" }, data, function(err) {});
+  }
 }
