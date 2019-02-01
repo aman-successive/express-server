@@ -4,8 +4,9 @@ export default function hasPermission(
   permissionsType: string,
   role: string,
 ): boolean {
-  if (permissions.hasOwnProperty(moduleName)) {
-    if (permissions[moduleName].all.includes(role)) {
+    if (permissions.hasOwnProperty(moduleName)) {
+    // tslint:disable-next-line:no-string-literal
+    if (permissions[moduleName]['all'].includes(role)) {
       return true;
     } else {
       return (permissions[moduleName][permissionsType].includes(role));

@@ -1,15 +1,19 @@
-import { UserRepo } from "../repositories/user/UserRepository";
+import { UserRepo } from '../repositories/user/UserRepository';
 export default function seedData() {
-  console.log("In seedData");
+  console.log('In seedData');
   const userRepo = new UserRepo();
-  userRepo.createUser({
-    name: "BANNER",
-    id: UserRepo.generateObjectId()
-  });
-  userRepo.deleteUser({
-    name: "HULK"
-  });
-  userRepo.updateUser({
-    name: "STARK"
+  userRepo.countUser().then((res) => {
+    if (res === 0) {
+      userRepo.createUser({
+        email: 'head@successive.tech',
+        name: 'HEAD-TRAINER',
+        role: 'head-trainer',
+      });
+      userRepo.createUser({
+        email: 'trainee@successive.tech',
+        name: 'TRAINEE',
+        role: 'trainee',
+      });
+    }
   });
 }
