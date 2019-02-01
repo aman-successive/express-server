@@ -1,4 +1,4 @@
-import { Router } from "express";
-import get from "./Controller";
+import { Router } from 'express';
+import get from './Controller';
 export const userRouter: Router = Router();
-userRouter.get("/", get);
+userRouter.get('/', get);

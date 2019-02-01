@@ -1,3 +1,3 @@
-import diamond from "./diamond";
-import triangle from "./triangle";
+import diamond from './diamond';
+import triangle from './triangle';
 export { diamond, triangle };

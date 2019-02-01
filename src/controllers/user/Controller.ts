@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 export default function get(req: Request, res: Response, next) {
-  console.log("Inside get");
+  console.log('Inside get');
   res.send({
-    Name: "User",
-    message: "User details",
+    Name: 'User',
+    message: 'User details',
     status: 200,
-    timestamp: new Date()
+    timestamp: new Date(),
   });
 }
