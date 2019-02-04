@@ -34,7 +34,16 @@ export default function(module, permissiontype) {
           status: 404,
         });
       }
+      else {
+        next();
+      }
+    })
+    .catch((err) => {
+      next({
+        error: 'Not Valid',
+        message: 'Unauthorised Access',
+        status: 401,
+      });
     });
-    next();
   };
 }
