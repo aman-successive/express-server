@@ -20,7 +20,7 @@ class Controller {
     const data = [{
       name,
     }];
-    userRepo.updateUser(req.body).then(() => {
+    userRepo.updateData(req.body).then(() => {
       res.status(202).send(successHandler('Success', 202, data));
     });
   }
@@ -29,7 +29,7 @@ class Controller {
     const data = [{
       name,
     }];
-    userRepo.deleteUser(req.params).then(() => {
+    userRepo.deleteData(req.params).then(() => {
       res.status(202).send(successHandler('Success', 202, data));
     });
   }

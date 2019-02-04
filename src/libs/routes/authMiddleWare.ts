@@ -19,7 +19,7 @@ export default function(module, permissiontype) {
     console.log(user);
     const { role } = user;
     console.log(role);
-    userRepo.findUser(user).then(() => {
+    userRepo.findData(user).then(() => {
       if (!user) {
         next({
           error: 'Not Valid',

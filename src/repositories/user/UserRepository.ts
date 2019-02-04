@@ -1,32 +1,22 @@
 import * as mongoose from 'mongoose';
-import IUserModel from './IUserModel';
+import { VersionRepo } from './../versionable/VersionableRepository';
 import { UserModel } from './UserModel';
-
-export class UserRepo {
-  public static generateObjectId() {
-    return String(mongoose.Types.ObjectId());
+import IUserModel from './IUserModel';
+const versionRepo = new VersionRepo(UserModel);
+export class UserRepo extends VersionRepo<IUserModel, mongoose.Model<IUserModel>> {
+  public createUser(data) {
+    return versionRepo.createUser(data);
   }
-  private model: mongoose.Model<IUserModel>;
-  constructor() {
-    this.model = UserModel;
+  public updateData(data) {
+    return versionRepo.updateUser(data);
   }
-  public createUser(data): Promise<IUserModel> {
-    return this.model.create({ ...data, _id: UserRepo.generateObjectId() });
+  public deleteData(data) {
+    return versionRepo.deleteUser(data);
   }
-  public deleteUser(data) {
-    return this.model.deleteMany(data, (err) => {
-      console.log('Error');
-    });
+  public findData(data) {
+    return versionRepo.findUser(data);
   }
-  public countUser() {
-    return this.model.countDocuments();
-  }
-  public updateUser(data) {
-    return this.model.updateMany({ name: 'BANNER' }, data, (err) => {
-      console.log('Error');
-    });
-  }
-  public findUser(data) {
-    return this.model.findOne(data);
+  public countData() {
+    return versionRepo.countUser();
   }
 }
