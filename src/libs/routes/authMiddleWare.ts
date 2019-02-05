@@ -1,7 +1,8 @@
 import * as jwt from 'jsonwebtoken';
+import { UserModel } from './../../repositories/user/UserModel';
 import { UserRepo } from './../../repositories/user/UserRepository';
 import hasPermission from './permissions';
-const userRepo = new UserRepo();
+const userRepo = new UserRepo(UserModel);
 export default function(module, permissiontype) {
   return (req, res, next) => {
     const token = req.headers.authorization;
@@ -19,7 +20,7 @@ export default function(module, permissiontype) {
     console.log(user);
     const { role } = user;
     console.log(role);
-    userRepo.findData(user).then(() => {
+    userRepo.findData({_id: user.id}).then(() => {
       if (!user) {
         next({
           error: 'Not Valid',

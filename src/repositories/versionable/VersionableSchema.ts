@@ -7,7 +7,6 @@ export class VersionableSchema extends mongoose.Schema {
         required: true,
         type: Date,
       },
-      collections,
       createdAt: {
         default: new Date(),
         required: true,
@@ -17,7 +16,8 @@ export class VersionableSchema extends mongoose.Schema {
         required: true,
         type: String,
       },
-    });
+    },
+    collections);
     super(versionSchema, options);
   }
 }

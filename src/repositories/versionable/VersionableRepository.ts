@@ -1,16 +1,17 @@
 import * as mongoose from 'mongoose';
 
 export class VersionRepo<D extends mongoose.Document, M extends mongoose.Model<D>> {
-  public static generateObjectId() {
-    return String(mongoose.Types.ObjectId());
-  }
   private model: M;
   constructor(model) {
     this.model = model;
   }
+  public generateObjectId() {
+    return String(mongoose.Types.ObjectId());
+  }
   public createUser(data): Promise<D> {
-    const id = VersionRepo.generateObjectId();
-    return this.model.create({ ...data, _id: VersionRepo.generateObjectId(), originalId: String(id)});
+    const id = this.generateObjectId();
+    console.log(id);
+    return this.model.create({ ...data, _id: id, originalId: id});
   }
   public deleteUser(data) {
     return this.model.deleteMany(data, (err) => {
