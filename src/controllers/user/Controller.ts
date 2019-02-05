@@ -35,5 +35,8 @@ class Controller {
       res.status(202).send(successHandler('Success', 202, data));
     });
   }
+  public createToken(req: Request, res: Response, next) {
+    res.status(200).send(successHandler('Token Generated', 202, 'OK'));
+  }
 }
 export default new Controller();

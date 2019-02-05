@@ -3,8 +3,7 @@ export class VersionableSchema extends mongoose.Schema {
   constructor(collections, options: any) {
     const versionSchema = Object.assign({
       DeletedAt: {
-        default: new Date(),
-        required: true,
+        required: false,
         type: Date,
       },
       createdAt: {

@@ -1,22 +1,27 @@
 const validateConfig = {
   create: {
-    id: {
-      in: ['body'],
-      required: true,
-      string: true,
-      custom(value) {
-        console.log('Value', value);
-        if (Array.isArray(value)) {
-          console.log('it is an array');
-        }
-        // throw { error: "Error Occurred", message: "Message",status:202 };
-      },
-    },
-    name: {
-      errorMessage: 'Name is required',
+    email: {
+      errorMessage: 'email is required',
       in: ['body'],
       regex: /^[A-Za-z0-9._%+-]+@successive.tech$/,
       required: false,
+    },
+    // id: {
+    //   in: ['body'],
+    //   required: false,
+    //   string: true,
+    //   custom(value) {
+    //     console.log('Value', value);
+    //     if (Array.isArray(value)) {
+    //       console.log('it is an array');
+    //     }
+    //     // throw { error: "Error Occurred", message: "Message",status:202 };
+    //   },
+    // },
+    pass: {
+      in: ['body'],
+      required: true,
+      string: true,
     },
   },
   delete: {

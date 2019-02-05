@@ -1,8 +1,12 @@
 import { Router } from 'express';
+import { validateHandler } from '../../libs/routes';
 import { authMiddleWare } from '../../libs/routes';
+import { tokenRoutes } from '../../libs/routes';
+import validateConfig from '../trainee/validate';
 import Controller from './Controller';
 export const userRouter: Router = Router();
-userRouter.get('/', authMiddleWare('trainee1', 'write'), Controller.get);
-userRouter.post('/', Controller.create);
-userRouter.put('/', Controller.update);
-userRouter.delete('/:name',  Controller.delete);
+userRouter.get('/', authMiddleWare('trainee1', 'write'), validateHandler(validateConfig.get), Controller.get);
+userRouter.post('/', validateHandler(validateConfig.create), tokenRoutes(), Controller.createToken);
+userRouter.put('/', authMiddleWare('trainee1', 'read'), validateHandler(validateConfig.update), Controller.update);
+userRouter.delete('/:name', authMiddleWare('trainee1', 'read'),
+validateHandler(validateConfig.delete), Controller.delete);
