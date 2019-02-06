@@ -37,7 +37,7 @@ class Server {
       config: { port, mongoUrl }
     } = this;
     Database.open(mongoUrl)
-      .then(result => {
+      .then(() => {
         app.listen(port, err => {
           if (err) {
             throw err;
@@ -45,7 +45,7 @@ class Server {
           console.log(`app is running on port ${port}`);
         });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("NOT RUNNING");
       });
   }
