@@ -7,6 +7,6 @@ import Controller from './Controller';
 export const userRouter: Router = Router();
 userRouter.get('/', authMiddleWare('trainee1', 'write'), validateHandler(validateConfig.get), Controller.get);
 userRouter.post('/', validateHandler(validateConfig.create), tokenRoutes(), Controller.createToken);
-userRouter.put('/', authMiddleWare('trainee1', 'read'), validateHandler(validateConfig.update), Controller.update);
+userRouter.put('/', validateHandler(validateConfig.update), Controller.update);
 userRouter.delete('/:name', authMiddleWare('trainee1', 'read'),
 validateHandler(validateConfig.delete), Controller.delete);

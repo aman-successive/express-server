@@ -18,12 +18,15 @@ class Controller {
     });
   }
   public update(req: Request, res: Response, next) {
-    const { name } = req.body;
+    const { emailid } = req.body;
     const data = [{
-      name,
+      emailid,
     }];
-    userRepo.updateData(req.body).then(() => {
-      res.status(202).send(successHandler('Success', 202, data));
+    userRepo.findData({email: emailid, deletedAt: undefined}).then((result) => {
+      console.log(result);
+      userRepo.updateData(result).then(() => {
+        res.status(202).send(successHandler('Success', 202, data));
+      });
     });
   }
   public delete(req: Request, res: Response, next) {

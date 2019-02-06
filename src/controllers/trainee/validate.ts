@@ -51,13 +51,13 @@ const validateConfig = {
   update: {
     dataToUpdate: {
       in: ['body'],
-      isObject: true,
-      required: true,
+      isObject: false,
+      required: false,
       custom(dataToUpdate) {
         console.log('Updated' );
       },
     },
-    id: {
+    emailid: {
       in: ['body'],
       required: true,
       string: false,
