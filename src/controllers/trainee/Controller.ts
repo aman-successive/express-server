@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import * as jwt from 'jsonwebtoken';
 import { successHandler } from '../../libs/routes';
 class Controller {
   public get(req: Request, res: Response) {
