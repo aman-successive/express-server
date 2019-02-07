@@ -6,9 +6,16 @@ export default function(module, permissiontype) {
   return (req, res, next) => {
     const token = req.headers.authorization;
     console.log(token);
-    let user;
+    let decodedToken;
     try {
-      user = jwt.verify(token, process.env.KEY);
+      decodedToken = jwt.verify(token, process.env.KEY);
+      if (!decodedToken) {
+        throw {
+          error: 'Not Valid',
+          message: 'Unauthorised Access',
+          status: 401,
+        };
+      }
     } catch (error) {
       return next({
         error: 'Not Valid',
@@ -16,18 +23,9 @@ export default function(module, permissiontype) {
         status: 401,
       });
     }
-    console.log(user);
-    const { role } = user;
-    console.log(role);
-    userRepo.findUser(user).then(() => {
-      if (!user) {
-        next({
-          error: 'Not Valid',
-          message: 'Unauthorised Access',
-          status: 401,
-        });
-      }
-      if (hasPermission(module, permissiontype, role) === false) {
+    userRepo.findUser({_id: decodedToken.id}).then((result) => {
+      console.log(result);
+      if (hasPermission(module, permissiontype, result.role) === false) {
         next({
           error: 'Not Valid',
           message: 'No Permission',
