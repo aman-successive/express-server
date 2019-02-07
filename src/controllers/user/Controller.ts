@@ -9,23 +9,29 @@ class Controller {
     res.status(200).send(successHandler('Success', 202, 'OK'));
   }
   public create(req: Request, res: Response, next) {
-    const { name } = req.body;
+    const { name, email, password, role } = req.body;
     const data = [{
+      email,
       name,
+      password,
+      role,
     }];
     userRepo.createUser(req.body).then(() => {
       res.status(202).send(successHandler('Success', 202, data));
     });
   }
   public update(req: Request, res: Response, next) {
-    const { emailid } = req.body;
+    const { id, dataToUpdate } = req.body;
     const data = [{
-      emailid,
+      id,
     }];
-    userRepo.findData({email: emailid, deletedAt: undefined}).then((result) => {
+    // userRepo.updateData(id, dataToUpdate).then(() => {
+    //   res.status(202).send(successHandler('Success', 202, data));
+    // });
+    userRepo.findData({originalId: id, deletedAt: undefined}).then((result) => {
       console.log(result);
-      userRepo.updateData(result).then(() => {
-        res.status(202).send(successHandler('Success', 202, data));
+      userRepo.updateData(result, dataToUpdate).then(() => {
+    res.status(202).send(successHandler('Success', 202, data));
       });
     });
   }

@@ -3,7 +3,7 @@ const validateConfig = {
     email: {
       errorMessage: 'email is required',
       in: ['body'],
-      regex: /^[A-Za-z0-9._%+-]+@successive.tech$/,
+      // regex: /^[A-Za-z0-9._%+-]+@successive.tech$/,
       required: false,
     },
     // id: {
@@ -18,7 +18,7 @@ const validateConfig = {
     //     // throw { error: "Error Occurred", message: "Message",status:202 };
     //   },
     // },
-    pass: {
+    password: {
       in: ['body'],
       required: true,
       string: true,
@@ -51,13 +51,13 @@ const validateConfig = {
   update: {
     dataToUpdate: {
       in: ['body'],
-      isObject: false,
-      required: false,
+      isObject: true,
+      required: true,
       custom(dataToUpdate) {
         console.log('Updated' );
       },
     },
-    emailid: {
+    id: {
       in: ['body'],
       required: true,
       string: false,

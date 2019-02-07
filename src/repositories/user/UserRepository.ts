@@ -7,8 +7,8 @@ export class UserRepo extends VersionRepo<IUserModel, mongoose.Model<IUserModel>
   public createUsers(data) {
     return versionRepo.createUser(data);
   }
-  public updateData(data) {
-    return versionRepo.updateUser(data);
+  public updateData(originalid, dataToUpdate) {
+    return versionRepo.updateUser(originalid, dataToUpdate);
   }
   public deleteData(data) {
     return versionRepo.deleteUser(data);
@@ -18,5 +18,8 @@ export class UserRepo extends VersionRepo<IUserModel, mongoose.Model<IUserModel>
   }
   public countData() {
     return versionRepo.countUser();
+  }
+  public findManyData(data, skip, limit) {
+    return versionRepo.findMultipleData(data, skip, limit);
   }
 }
