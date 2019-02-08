@@ -1,4 +1,4 @@
-export function successHandler(message, status, data) {
+export function successHandler(message: string, status: number, data: any): object {
   return {
     Data: data || 'null',
     Message: message || 'success',

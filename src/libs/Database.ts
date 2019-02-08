@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import seedData from './seedData';
 class Database {
-  public open(mongoUrl) {
+  public open(mongoUrl): Promise<{}> {
     return new Promise((resolve, reject) => {
       mongoose
         .connect(
@@ -10,16 +10,14 @@ class Database {
         )
         .then(() => {
           resolve();
-          console.log('connected');
         })
         .catch((err) => {
           reject(err);
-          console.log('not connected');
         });
       seedData();
     });
   }
-  public disconnect() {
+  public disconnect(): void {
     mongoose.connection.close();
   }
 }

@@ -1,28 +1,22 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { successHandler } from '../../libs/routes';
 class Controller {
-  public get(req: Request, res: Response) {
+  public get(req: Request, res: Response): void {
     res.status(202).send(successHandler('AUTHORIZED', 202, 'Verified'));
   }
-  public create(req: Request, res: Response, next) {
+  public create(req: Request, res: Response, next: NextFunction): void {
     const { name, id } = req.body;
-    const data = [
+    const data: object = [
       {
         id,
         name,
       },
     ];
-    // if (!name) {
-    //   return next({ error: "Name not found", message: "Error", status: 404 });
-    // }
-    // if (!id) {
-    //   return next({ error: "id not found", message: "Error", status: 404 });
-    // }
     res.status(202).send(successHandler('Success', 202, data));
   }
-  public update(req: Request, res: Response, next) {
+  public update(req: Request, res: Response, next: NextFunction): void {
     const { dataToUpdate, id } = req.body;
-    const data = [
+    const data: object = [
       {
         dataToUpdate,
         id,
@@ -30,9 +24,8 @@ class Controller {
     ];
     res.status(202).send(successHandler('Success', 202, data));
   }
-  public delete(req: Request, res: Response, next) {
+  public delete(req: Request, res: Response, next: NextFunction): void {
     const { id } = req.param;
-    console.log('inside delete');
     res.status(202).send(successHandler('Data deleted', 202, id));
   }
 }

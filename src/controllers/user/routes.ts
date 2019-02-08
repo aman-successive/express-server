@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import { validateHandler } from '../../libs/routes';
 import { authMiddleWare } from '../../libs/routes';
-import validateConfig from '../trainee/validate';
 import Controller from './Controller';
+import validateConfig from './validate';
 export const userRouter: Router = Router();
-userRouter.get('/', validateHandler(validateConfig.get), Controller.get);
-userRouter.post('/', validateHandler(validateConfig.create), Controller.create);
-userRouter.put('/', validateHandler(validateConfig.update), Controller.update);
-userRouter.delete('/:name', authMiddleWare('trainee1', 'read'),
-validateHandler(validateConfig.delete), Controller.delete);
+userRouter.get('/', authMiddleWare('trainee1', 'read'), validateHandler(validateConfig.get), Controller.get);
+userRouter.post('/', authMiddleWare('trainee1', 'write'), validateHandler(validateConfig.create), Controller.create);
+userRouter.put('/', authMiddleWare('trainee1', 'write'), validateHandler(validateConfig.update), Controller.update);
+// tslint:disable-next-line:max-line-length
+userRouter.delete('/:id', authMiddleWare('trainee1', 'delete'), validateHandler(validateConfig.delete), Controller.delete);
