@@ -6,7 +6,11 @@ import { UserRepo } from './../../repositories/user/UserRepository';
 const userRepo = new UserRepo(UserModel);
 class Controller {
   public get(req: Request, res: Response, next) {
-    res.status(200).send(successHandler('Success', 202, 'OK'));
+    const {skip, limit} = req.query;
+    userRepo.findManyData(skip, limit).then((data) => {
+      console.log(data);
+      res.status(200).send(successHandler('Success', 202, data));
+    });
   }
   public create(req: Request, res: Response, next) {
     const { name, email, password, role } = req.body;

@@ -45,8 +45,9 @@ export class VersionRepo<D extends mongoose.Document, M extends mongoose.Model<D
   public findUser(data) {
     return this.model.findOne(data);
   }
-  public findMultipleData(data, value1, value2) {
-    return this.model.find(data, undefined, { skip: value1, limit: value2}, (err, result) => {
+  public findMultipleData(value1, value2) {
+    // tslint:disable-next-line:no-null-keyword
+    return this.model.find({}, null, { skip: Number(value1), limit: Number(value2)}, (err, result) => {
       console.log(err);
     });
   }

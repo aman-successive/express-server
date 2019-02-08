@@ -19,7 +19,7 @@ export class UserRepo extends VersionRepo<IUserModel, mongoose.Model<IUserModel>
   public countData() {
     return versionRepo.countUser();
   }
-  public findManyData(data, skip, limit) {
-    return versionRepo.findMultipleData(data, skip, limit);
+  public findManyData(skip, limit) {
+    return versionRepo.findMultipleData(skip, limit);
   }
 }
