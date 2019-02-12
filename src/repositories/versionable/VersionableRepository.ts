@@ -21,11 +21,15 @@ export class VersionRepo<D extends mongoose.Document, M extends mongoose.Model<D
   public countUser() {
     return this.model.countDocuments();
   }
-  public updateUser(data) {
-    return this.model.updateMany({ name: 'BANNER' }, data, (err) => {
-      console.log('Error');
+  public updateUser(oldData) {
+    const createDate = new Date();
+    oldData.createdAt = createDate;
+    const oldId = oldData._id;
+    oldData._id = this.generateObjectId();
+    return this.model.updateOne({_id: oldId}, { $set: { deletedAt: createDate }}).then(() => {
+    return this.model.insertMany(oldData);
     });
-  }
+    }
   public findUser(data) {
     return this.model.findOne(data);
   }

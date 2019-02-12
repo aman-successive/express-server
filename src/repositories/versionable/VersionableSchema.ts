@@ -2,14 +2,13 @@ import * as mongoose from 'mongoose';
 export class VersionableSchema extends mongoose.Schema {
   constructor(collections, options: any) {
     const versionSchema = Object.assign({
-      DeletedAt: {
+      createdAt: {
         default: new Date(),
         required: true,
         type: Date,
       },
-      createdAt: {
-        default: new Date(),
-        required: true,
+      deletedAt: {
+        required: false,
         type: Date,
       },
       originalId: {
