@@ -1,4 +1,4 @@
-
+import * as bcrypt from 'bcrypt';
 import { NextFunction, Request, Response } from 'express';
 import { successHandler } from '../../libs/routes';
 import { UserModel } from './../../repositories/user/UserModel';
@@ -22,6 +22,10 @@ class Controller {
     }
   }
   public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const saltRounds: number = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashPassword = bcrypt.hashSync(req.body.password, salt);
+    req.body.password = hashPassword;
     const { name, email, password, role } = req.body;
     const data: object = [{
       email,
