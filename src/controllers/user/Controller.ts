@@ -1,7 +1,9 @@
+
 import { Request, Response } from 'express';
 import { successHandler } from '../../libs/routes';
+import { UserModel } from './../../repositories/user/UserModel';
 import { UserRepo } from './../../repositories/user/UserRepository';
-const userRepo = new UserRepo();
+const userRepo = new UserRepo(UserModel);
 class Controller {
   public get(req: Request, res: Response, next) {
     res.status(200).send(successHandler('Success', 202, 'OK'));
@@ -20,7 +22,7 @@ class Controller {
     const data = [{
       name,
     }];
-    userRepo.updateUser(req.body).then(() => {
+    userRepo.updateData(req.body).then(() => {
       res.status(202).send(successHandler('Success', 202, data));
     });
   }
@@ -29,7 +31,7 @@ class Controller {
     const data = [{
       name,
     }];
-    userRepo.deleteUser(req.params).then(() => {
+    userRepo.deleteData(req.params).then(() => {
       res.status(202).send(successHandler('Success', 202, data));
     });
   }
