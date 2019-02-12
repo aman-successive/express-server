@@ -20,6 +20,7 @@ export function tokenRoutes() {
       const { password } = result;
       if (bcrypt.compareSync(pass, password)) {
         const token = jwt.sign({ result, iat: Math.floor(Date.now() / 1000) - 900 }, process.env.KEY);
+        req.body.data = token ;
         console.log(token);
         next();
       }
