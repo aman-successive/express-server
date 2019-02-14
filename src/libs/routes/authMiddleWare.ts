@@ -24,7 +24,7 @@ export default function(module, permissiontype) {
         status: 401,
       });
     }
-    userRepo.findData({_id: decodedToken.id, deletedAt: undefined}).then((result: IUserModel) => {
+    userRepo.findData({originalId: decodedToken.originalId, deletedAt: undefined}).then((result: IUserModel) => {
       if (hasPermission(module, permissiontype, result.role) === false) {
         next({
           error: 'Not Valid',

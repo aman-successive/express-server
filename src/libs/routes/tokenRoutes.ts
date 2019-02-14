@@ -12,8 +12,7 @@ const userRepo = new UserRepo(UserModel);
 export const tokenRoutes: Router = Router();
 tokenRoutes.get('/', validateHandler(validateConfig.get),
 (req: Request, res: Response , next: NextFunction) => {
-  const { emailid, pass } = req.body;
-  userRepo.findData({email: emailid }).then((result: IUserModel) => {
+  userRepo.findData({email: req.body.email, deletedAt: undefined }).then((result: IUserModel) => {
     if (!result) {
       next({
         error: 'Invalid Email',
@@ -22,8 +21,9 @@ tokenRoutes.get('/', validateHandler(validateConfig.get),
       });
     }
     const { password } = result;
-    if (bcrypt.compareSync(pass, password)) {
-      const token = jwt.sign({ result, iat: Math.floor(Date.now() / 1000) - 900 }, process.env.KEY);
+    if (bcrypt.compareSync(req.body.password, password)) {
+      // tslint:disable-next-line:max-line-length
+      const token = jwt.sign({ originalId: result.originalId, iat: Math.floor(Date.now() / 1000) - 900 }, process.env.KEY);
       res.status(202).send(successHandler('Success', 202, token));
     }
     else {
