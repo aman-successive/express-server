@@ -1,46 +1,77 @@
-
-import { Request, Response } from 'express';
+import * as bcrypt from 'bcrypt';
+import { NextFunction, Request, Response } from 'express';
 import { successHandler } from '../../libs/routes';
 import { UserModel } from './../../repositories/user/UserModel';
 import { UserRepo } from './../../repositories/user/UserRepository';
 const userRepo = new UserRepo(UserModel);
 class Controller {
-  public get(req: Request, res: Response, next) {
-    res.status(200).send(successHandler('Success', 202, 'OK'));
-  }
-  public create(req: Request, res: Response, next) {
-    const { name } = req.body;
-    const data = [{
-      name,
-    }];
-    userRepo.createUser(req.body).then(() => {
-      res.status(202).send(successHandler('Success', 202, data));
-    });
-  }
-  public update(req: Request, res: Response, next) {
-    const { emailid } = req.body;
-    const data = [{
-      emailid,
-    }];
-    userRepo.findData({email: emailid, deletedAt: undefined}).then((result) => {
-      console.log(result);
-      userRepo.updateData(result).then(() => {
-        res.status(202).send(successHandler('Success', 202, data));
+  public async get(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const {skip = 0, limit = 10} = req.query;
+    const result = await userRepo.findManyData(skip, limit);
+    try {
+      userRepo.countData().then((documents) => {
+        const data = [{
+          documents,
+          result,
+        }];
+        res.status(200).send(successHandler('Success', 202, data));
       });
-    });
+    }
+    catch (err) {
+      console.log('Could not find documents');
+    }
   }
-  public delete(req: Request, res: Response, next) {
-    const { name } = req.params;
-    const data = [{
+  public async create(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const saltRounds: number = 10;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hashPassword = bcrypt.hashSync(req.body.password, salt);
+    req.body.password = hashPassword;
+    const { name, email, password, role } = req.body;
+    const data: object = [{
+      email,
       name,
+      password,
+      role,
     }];
-    userRepo.deleteData(req.params).then(() => {
+    const result = await userRepo.createUser(req.body);
+    try {
       res.status(202).send(successHandler('Success', 202, data));
-    });
+    }
+    catch (err) {
+      console.log('Could not create new User');
+    }
   }
-  public createToken(req: Request, res: Response, next) {
-    const token = req.body.data;
-    res.status(200).send(successHandler('Token Generated', 202, token));
+  public async update(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id, dataToUpdate } = req.body;
+    const data: object = [{
+      id,
+    }];
+    const results = await userRepo.findData({originalId: id, deletedAt: undefined});
+    try {
+      const result = userRepo.updateData(results, dataToUpdate);
+      try {
+    res.status(202).send(successHandler('Success', 202, data));
+      }
+      catch (err) {
+        console.log('Could not update Data');
+      }
+    }
+    catch (err) {
+      console.log('Could not find data');
+    }
+  }
+  public async delete(req: Request, res: Response, next: NextFunction): Promise<void> {
+    const { id } = req.params;
+    const data: object = [{
+      id,
+    }];
+    const result = await userRepo.deleteData(id);
+    try {
+      res.status(202).send(successHandler('Data Deleted', 202, data));
+    }
+    catch (err) {
+      console.log('Could not delete data');
+    }
   }
 }
 export default new Controller();

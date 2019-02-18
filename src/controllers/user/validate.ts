@@ -4,21 +4,20 @@ const validateConfig = {
       errorMessage: 'email is required',
       in: ['body'],
       // regex: /^[A-Za-z0-9._%+-]+@successive.tech$/,
-      required: false,
+      required: true,
     },
-    // id: {
-    //   in: ['body'],
-    //   required: false,
-    //   string: true,
-    //   custom(value) {
-    //     console.log('Value', value);
-    //     if (Array.isArray(value)) {
-    //       console.log('it is an array');
-    //     }
-    //     // throw { error: "Error Occurred", message: "Message",status:202 };
-    //   },
-    // },
+    name: {
+      errorMessage: 'name is required',
+      in: ['body'],
+      required: true,
+      string: true,
+    },
     password: {
+      in: ['body'],
+      required: true,
+      string: true,
+    },
+    role: {
       in: ['body'],
       required: true,
       string: true,
@@ -28,7 +27,7 @@ const validateConfig = {
     id: {
       errorMessage: 'Id is required',
       in: ['params'],
-      required: false,
+      required: true,
       string: true,
     },
   },
